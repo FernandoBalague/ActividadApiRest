@@ -3,9 +3,10 @@ from fastapi.security import OAuth2PasswordBearer
 from pydantic import BaseModel
 from typing import List, Optional
 from enum import Enum
+import os
+import uvicorn  # Asegúrate de que esté en tu requirements.txt
 
 app = FastAPI()
-
 
 usuarios = {
     "admin": {"contrasena": "1234", "rol": "Administrador"},
@@ -97,3 +98,8 @@ def autorizar_acceso(data: AccesoInput, usuario=Depends(get_usuario_actual)):
     if usuario["rol"] != data.rol_usuario:
         raise HTTPException(status_code=403, detail="Rol no autorizado para los recursos solicitados")
     return {"mensaje": "Acceso autorizado", "recursos": data.recursos}
+
+# 🚀 Agregado para Railway: correr en el puerto dinámico
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8000))  # Usa el puerto de Railway o 8000 por defecto
+    uvicorn.run("ApiRest:app", host="0.0.0.0", port=port, reload=False)
