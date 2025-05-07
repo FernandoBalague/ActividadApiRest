@@ -97,10 +97,3 @@ def autorizar_acceso(data: AccesoInput, usuario=Depends(get_usuario_actual)):
     if usuario["rol"] != data.rol_usuario:
         raise HTTPException(status_code=403, detail="Rol no autorizado para los recursos solicitados")
     return {"mensaje": "Acceso autorizado", "recursos": data.recursos}
-
-if __name__ == "__main__":
-    import os
-    import uvicorn
-    port = int(os.environ.get("PORT", 8000))
-    uvicorn.run(app, host="0.0.0.0", port=port)
-
