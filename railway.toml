@@ -1,6 +1,6 @@
-# railway.toml
 [build]
-  dockerfile = "Dockerfile"
+builder = "Dockerfile"
 
 [deploy]
-  command = "uvicorn main:app --host 0.0.0.0 --port 8000"
+startCommand = "python main.py"
+
